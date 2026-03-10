@@ -39,13 +39,15 @@ app.get("/api/player/:name/:tag", async (req, res) => {
     });
 
     const mmrData = mmrRes.data?.data?.current_data || {};
+    console.log(`MMR data for ${name}#${tag}:`, JSON.stringify(mmrData, null, 2));
 
-    const matchesUrl = `https://api.henrikdev.xyz/valorant/v3/matches/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`;
+    const matchesUrl = `https://api.henrikdev.xyz/valorant/v3/matches/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}?mode=competitive&size=20`;
     const matchesRes = await axios.get(matchesUrl, {
       headers: HENRIK_KEY ? { "Authorization": HENRIK_KEY } : {}
     });
 
     const matchesData = matchesRes.data?.data || [];
+    console.log(`Found ${matchesData.length} competitive matches for ${name}#${tag}`);
 
     const stats = calculateStats(account, mmrData, matchesData);
 
@@ -91,13 +93,15 @@ function calculateStats(account, mmr, matches) {
   let totalKills = 0, totalDeaths = 0, totalHS = 0, totalShots = 0;
   let totalACS = 0, wins = 0, firstBloods = 0, clutchesWon = 0, clutchAttempts = 0;
   const recentMatches = [];
+  let validMatchCount = 0;
 
-  matches.slice(0, 10).forEach(match => {
+  matches.forEach(match => {
     const playerData = match.players?.all_players?.find(
       p => p.name === account.name && p.tag === account.tag
     );
 
     if (playerData) {
+      validMatchCount++;
       totalKills += playerData.stats?.kills || 0;
       totalDeaths += playerData.stats?.deaths || 0;
       totalHS += playerData.stats?.headshots || 0;
@@ -126,11 +130,12 @@ function calculateStats(account, mmr, matches) {
     }
   });
 
-  const matchCount = Math.min(matches.length, 10);
+  console.log(`Stats calculation: ${validMatchCount} matches, K:${totalKills} D:${totalDeaths} HS:${totalHS}/${totalShots}`);
+
   stats.kd = totalDeaths > 0 ? parseFloat((totalKills / totalDeaths).toFixed(2)) : 0;
-  stats.wr = matchCount > 0 ? Math.round((wins / matchCount) * 100) : 0;
+  stats.wr = validMatchCount > 0 ? Math.round((wins / validMatchCount) * 100) : 0;
   stats.hs = totalShots > 0 ? Math.round((totalHS / totalShots) * 100) : 0;
-  stats.acs = matchCount > 0 ? Math.round(totalACS / matchCount) : 0;
+  stats.acs = validMatchCount > 0 ? Math.round(totalACS / validMatchCount) : 0;
   stats.fbr = 0;
   stats.clutch = 0;
   stats.matches = recentMatches;
