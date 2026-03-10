@@ -12,6 +12,32 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
+// Debug endpoint to see raw API data
+app.get('/api/debug/:region/:name/:tag', async (req, res) => {
+  try {
+    const { region, name, tag } = req.params;
+
+    const mmrUrl = `https://api.henrikdev.xyz/valorant/v2/mmr/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`;
+    const mmrRes = await axios.get(mmrUrl, {
+      headers: HENRIK_KEY ? { "Authorization": HENRIK_KEY } : {}
+    });
+
+    const matchesUrl = `https://api.henrikdev.xyz/valorant/v3/matches/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}?mode=competitive&size=5`;
+    const matchesRes = await axios.get(matchesUrl, {
+      headers: HENRIK_KEY ? { "Authorization": HENRIK_KEY } : {}
+    });
+
+    res.json({
+      mmr: mmrRes.data,
+      matches: matchesRes.data,
+      matchCount: matchesRes.data?.data?.length || 0
+    });
+  } catch (error) {
+    console.error('Debug error:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // API endpoint to fetch player stats
 app.get("/api/player/:name/:tag", async (req, res) => {
   const { name, tag } = req.params;
@@ -48,6 +74,10 @@ app.get("/api/player/:name/:tag", async (req, res) => {
 
     const matchesData = matchesRes.data?.data || [];
     console.log(`Found ${matchesData.length} competitive matches for ${name}#${tag}`);
+
+    if (matchesData.length > 0) {
+      console.log(`First match mode: ${matchesData[0]?.metadata?.mode}, map: ${matchesData[0]?.metadata?.map}`);
+    }
 
     const stats = calculateStats(account, mmrData, matchesData);
 
@@ -95,17 +125,25 @@ function calculateStats(account, mmr, matches) {
   const recentMatches = [];
   let validMatchCount = 0;
 
-  matches.forEach(match => {
+  matches.forEach((match, idx) => {
     const playerData = match.players?.all_players?.find(
       p => p.name === account.name && p.tag === account.tag
     );
 
     if (playerData) {
       validMatchCount++;
-      totalKills += playerData.stats?.kills || 0;
-      totalDeaths += playerData.stats?.deaths || 0;
-      totalHS += playerData.stats?.headshots || 0;
-      totalShots += (playerData.stats?.bodyshots || 0) + (playerData.stats?.headshots || 0) + (playerData.stats?.legshots || 0);
+      const kills = playerData.stats?.kills || 0;
+      const deaths = playerData.stats?.deaths || 0;
+      const hs = playerData.stats?.headshots || 0;
+      const bs = playerData.stats?.bodyshots || 0;
+      const ls = playerData.stats?.legshots || 0;
+
+      console.log(`Match ${idx + 1}: K:${kills} D:${deaths} HS:${hs} BS:${bs} LS:${ls} Mode:${match.metadata?.mode}`);
+
+      totalKills += kills;
+      totalDeaths += deaths;
+      totalHS += hs;
+      totalShots += bs + hs + ls;
       totalACS += playerData.stats?.score || 0;
 
       const playerTeam = playerData.team;
