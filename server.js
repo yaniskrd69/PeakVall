@@ -52,7 +52,15 @@ app.get("/api/player/:name/:tag", async (req, res) => {
     return res.json({ success: true, ...stats });
   } catch (error) {
     console.error("API Error:", error.message);
-    return res.status(500).json({ success: false, error: "API request failed" });
+    console.error("Stack:", error.stack);
+    if (error.response) {
+      console.error("Response data:", error.response.data);
+      console.error("Response status:", error.response.status);
+    }
+    return res.status(500).json({
+      success: false,
+      error: error.response?.data?.errors?.[0]?.message || error.message || "API request failed"
+    });
   }
 });
 
@@ -96,15 +104,20 @@ function calculateStats(account, mmr, matches) {
       totalShots += (playerData.stats?.bodyshots || 0) + (playerData.stats?.headshots || 0) + (playerData.stats?.legshots || 0);
       totalACS += playerData.stats?.score || 0;
 
-      if (playerData.team === match.teams?.red?.has_won ? "Red" : playerData.team === match.teams?.blue?.has_won ? "Blue" : null) {
+      const playerTeam = playerData.team;
+      const redWon = match.teams?.red?.has_won;
+      const blueWon = match.teams?.blue?.has_won;
+
+      if ((playerTeam === "Red" && redWon) || (playerTeam === "Blue" && blueWon)) {
         wins++;
       }
 
       if (recentMatches.length < 5) {
+        const didWin = (playerTeam === "Red" && redWon) || (playerTeam === "Blue" && blueWon);
         recentMatches.push({
           map: match.metadata?.map || "Unknown",
           agent: playerData.character || "Unknown",
-          result: playerData.team === (match.teams?.red?.has_won ? "Red" : "Blue") ? "W" : "L",
+          result: didWin ? "W" : "L",
           kda: `${playerData.stats?.kills || 0}/${playerData.stats?.deaths || 0}/${playerData.stats?.assists || 0}`,
           acs: playerData.stats?.score || 0,
           score: Math.min(99, Math.max(10, Math.round((playerData.stats?.score || 0) / 3)))
