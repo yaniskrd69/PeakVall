@@ -30,7 +30,7 @@ const { useState, useRef } = React;
 // REAL API — calls Node.js backend
 // Set VITE_BACKEND_URL in .env.production
 // ═══════════════════════════════════════
-const BACKEND_URL = "";
+const BACKEND_URL = window.location.origin;
 
 const fetchPlayer = async (riotId) => {
   const parts = (riotId || "").trim().split("#");
@@ -271,8 +271,8 @@ const Dashboard = ({ lang, t, playerStats }) => {
   const s = playerStats || MOCK;
 
   const aceMsg = lang === "fr"
-    ? \\`\${s.name}, j'ai détecté que tu perds 47% de tes gunfights à cause d\'un problème de timing sur ton contre-strafe. Un coach humain mettrait 3 sessions à identifier ça. Moi, 4 secondes.\`
-    : \\`\${s.name}, I detected you're losing 47% of your gunfights due to counter-strafe timing. A human coach would take 3 sessions to spot this. I took 4 seconds.\`;
+    ? \\\`\${s.name}, j'ai détecté que tu perds 47% de tes gunfights à cause d\'un problème de timing sur ton contre-strafe. Un coach humain mettrait 3 sessions à identifier ça. Moi, 4 secondes.\`
+    : \\\`\${s.name}, I detected you're losing 47% of your gunfights due to counter-strafe timing. A human coach would take 3 sessions to spot this. I took 4 seconds.\`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0f", color: "#fff", fontFamily: "Inter, sans-serif", padding: "26px 22px" }}>
