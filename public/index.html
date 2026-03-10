@@ -441,11 +441,11 @@ const Chat = ({ lang, t, playerStats }) => {
     role: "assistant",
     content: playerStats
       ? (lang === "fr"
-      ? (lang === "fr"
           ? "Salut ! Je suis ACE, ton coach. Stats : " + s.rank + ", KD " + s.kd + ", HS% " + s.hs + "%, WR " + s.wr + "%. Faiblesse : " + (s.weaknesses?.[0] || "a analyser") + ". Par ou commencer ?"
           : "Hey! I am ACE, your coach. Stats: " + s.rank + ", K/D " + s.kd + ", HS% " + s.hs + "%, WR " + s.wr + "%. Weakness: " + (s.weaknesses?.[0] || "to analyze") + ". Where to start?")
       : (lang === "fr"
           ? "Salut ! Je suis ACE. Entre ton Riot ID pour analyser tes vraies stats !"
+          : "Hey! I'm ACE. Enter your Riot ID to analyze your real stats!")
   }];
   const [msgs, setMsgs] = useState(initMsg);
   const [input, setInput] = useState("");
