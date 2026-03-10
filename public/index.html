@@ -17,7 +17,7 @@ const { useState, useRef } = React;
 // REAL API — calls Node.js backend
 // Set VITE_BACKEND_URL in .env.production
 // ═══════════════════════════════════════
-const BACKEND_URL = "";
+const BACKEND_URL = window.location.origin;
 
 const fetchPlayer = async (riotId) => {
   const parts = (riotId || "").trim().split("#");
