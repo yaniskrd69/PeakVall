@@ -111,8 +111,8 @@ const MOCK = {
 // TRANSLATIONS
 // ═══════════════════════════════════════
 const T = {
-  fr: { nav_home:"Accueil", nav_dash:"Dashboard", nav_coach:"Coach ACE", nav_pricing:"Tarifs", nav_signup:"Commencer", hero_title:"Rencontre ACE —", hero_title2:"Ton Coach Valorant IA Personnel", hero_sub:"Entre ton Riot ID. ACE analyse tout. Tu montes.", hero_cta:"Obtenir mon analyse gratuite", hero_input:"Joueur#TAG (ex: TenZ#000)", hero_badge:"Utilisé par 12 847 joueurs", hero_hint:"Exemple : TenZ#000 · Jooky#EU1 · TonPseudo#TAG", vs_title:"Pourquoi PeakVal bat un vrai coach", how_title:"Comment ça marche", testi_title:"Joueurs qui ont grimpé avec ACE", quiz_q1:"Avant de t'analyser — sur quoi tu veux progresser ?", quiz_q2:"Comment tu veux jouer en ranked ?", quiz_btn:"Analyser mon jeu →", best:"Tu es meilleur que tu crois 🔥", mirror_title:"Tu joues comme...", mirror_lock:"Passe en Pro pour révéler ton jumeau pro", pred_title:"Rank Predictor", pred_lock:"Débloque les 3 conditions", ace1:"J'ai analysé 847 données sur ton compte en 4 secondes.", ace2:"Un coach humain à 80€/h ne peut pas voir tout ça.", ace3:"Moi je vois TOUT. Tout le temps. Moins cher qu'un café par semaine.", ace_cta:"Débloquer mon plan — 9.99€/mois", ace_sub:"Moins cher qu'1h avec un vrai coach", strengths:"Points Forts", weaknesses:"À Améliorer", recent:"Matchs Récents", map:"Map", result:"Résultat", agent:"Agent", insights:"Insights d'ACE", chat_title:"Chat avec ACE", chat_ph:"Pose n'importe quelle question à ACE...", chat_send:"Envoyer", chat_thinking:"ACE analyse...", chips:["Pourquoi je stagne ?","Analyse mes 5 derniers matchs","Qu'est-ce qu'un pro VCT ferait ?","Donne-moi mon plan 30 jours","Coaching mental — en tilt"], price_title:"Choisir ton plan", price_sub:"Moins cher qu'une heure avec un vrai coach", monthly:"Mensuel", annual:"Annuel", save:"2 mois offerts", popular:"PLUS POPULAIRE", cta_free:"Commencer", cta_pro:"Commencer Pro", cta_team:"Créer mon équipe", cancel:"Annulation à tout moment. Sans engagement. Paiement sécurisé via Stripe." },
-  en: { nav_home:"Home", nav_dash:"Dashboard", nav_coach:"Coach ACE", nav_pricing:"Pricing", nav_signup:"Get Started", hero_title:"Meet ACE —", hero_title2:"Your Personal AI Valorant Coach", hero_sub:"Enter your Riot ID. ACE analyzes everything. You climb.", hero_cta:"Get My Free Analysis", hero_input:"Player#TAG (e.g. TenZ#000)", hero_badge:"Trusted by 12,847 players", hero_hint:"Example: TenZ#000 · Shroud#NA1 · YourName#TAG", vs_title:"Why PeakVal beats a human coach", how_title:"How it works", testi_title:"Players who climbed with ACE", quiz_q1:"Before I analyze you — what do you want to improve?", quiz_q2:"How do you want to play ranked?", quiz_btn:"Analyze my game →", best:"You're better than you think 🔥", mirror_title:"You play like...", mirror_lock:"Upgrade to reveal your pro twin", pred_title:"Rank Predictor", pred_lock:"Unlock the 3 conditions", ace1:"I analyzed 847 data points on your account in 4 seconds.", ace2:"A human coach at 80€/h can't see all this.", ace3:"I see EVERYTHING. All the time. Less than a coffee per week.", ace_cta:"Unlock my full plan — 9.99€/mo", ace_sub:"Less than 1h with a human coach", strengths:"Strengths", weaknesses:"To Improve", recent:"Recent Matches", map:"Map", result:"Result", agent:"Agent", insights:"ACE Insights", chat_title:"Chat with ACE", chat_ph:"Ask ACE anything...", chat_send:"Send", chat_thinking:"ACE is analyzing...", chips:["Why am I hardstuck?","Analyze my last 5 matches","What would a VCT pro do?","Give me my 30-day plan","Mental coaching — on tilt"], price_title:"Choose your plan", price_sub:"Less than 1 hour with a human coach", monthly:"Monthly", annual:"Annual", save:"2 months free", popular:"MOST POPULAR", cta_free:"Get Started", cta_pro:"Start Pro Now", cta_team:"Create My Team", cancel:"Cancel anytime. No commitment. Secure payment via Stripe." },
+  fr: { nav_home:"Accueil", nav_dash:"Dashboard", nav_coach:"Coach ACE", nav_pricing:"Tarifs", nav_signup:"Commencer", hero_title:"Rencontre ACE —", hero_title2:"Ton Coach Valorant IA Personnel", hero_sub:"Entre ton Riot ID. ACE analyse tout. Tu montes.", hero_cta:"Obtenir mon analyse gratuite", hero_input:"Joueur#TAG (ex: TenZ#000)", hero_badge:"Utilisé par 12 847 joueurs", hero_hint:"Exemple : TenZ#000 · Jooky#EU1 · TonPseudo#TAG", vs_title:"Pourquoi PeakVal bat un vrai coach", how_title:"Comment ça marche", testi_title:"Joueurs qui ont grimpé avec ACE", quiz_q1:"Avant de t'analyser — sur quoi tu veux progresser ?", quiz_q2:"Comment tu veux jouer en ranked ?", quiz_btn:"Analyser mon jeu →", best:"Tu es meilleur que tu crois 🔥", mirror_title:"Tu joues comme...", mirror_lock:"Passe en Pro pour révéler ton jumeau pro", pred_title:"Rank Predictor", pred_lock:"Débloque les 3 conditions", ace1:"J'ai analysé 847 données sur ton compte en 4 secondes.", ace2:"Un coach humain à 80€/h ne peut pas voir tout ça.", ace3:"Moi je vois TOUT. Tout le temps. Moins cher qu'un café par semaine.", ace_cta:"Débloquer mon plan — 9.99€/mois", ace_sub:"Moins cher qu'1h avec un vrai coach", strengths:"Points Forts", weaknesses:"À Améliorer", recent:"Matchs Récents", map:"Map", result:"Résultat", agent:"Agent", insights:"Insights d'ACE", chat_title:"Chat avec ACE", chat_ph:"Pose n'importe quelle question à ACE...", chat_send:"Envoyer", chat_thinking:"ACE analyse...", chips:["Pourquoi je hardstuck ?","Analyse mes 5 derniers matchs","Comment je carry ce rank ?","Plan 30 jours pour rankup","J'suis en tilt, aide-moi","Quel agent pour moi ?"], price_title:"Choisir ton plan", price_sub:"Moins cher qu'une heure avec un vrai coach", monthly:"Mensuel", annual:"Annuel", save:"2 mois offerts", popular:"PLUS POPULAIRE", cta_free:"Commencer", cta_pro:"Commencer Pro", cta_team:"Créer mon équipe", cancel:"Annulation à tout moment. Sans engagement. Paiement sécurisé via Stripe." },
+  en: { nav_home:"Home", nav_dash:"Dashboard", nav_coach:"Coach ACE", nav_pricing:"Pricing", nav_signup:"Get Started", hero_title:"Meet ACE —", hero_title2:"Your Personal AI Valorant Coach", hero_sub:"Enter your Riot ID. ACE analyzes everything. You climb.", hero_cta:"Get My Free Analysis", hero_input:"Player#TAG (e.g. TenZ#000)", hero_badge:"Trusted by 12,847 players", hero_hint:"Example: TenZ#000 · Shroud#NA1 · YourName#TAG", vs_title:"Why PeakVal beats a human coach", how_title:"How it works", testi_title:"Players who climbed with ACE", quiz_q1:"Before I analyze you — what do you want to improve?", quiz_q2:"How do you want to play ranked?", quiz_btn:"Analyze my game →", best:"You're better than you think 🔥", mirror_title:"You play like...", mirror_lock:"Upgrade to reveal your pro twin", pred_title:"Rank Predictor", pred_lock:"Unlock the 3 conditions", ace1:"I analyzed 847 data points on your account in 4 seconds.", ace2:"A human coach at 80€/h can't see all this.", ace3:"I see EVERYTHING. All the time. Less than a coffee per week.", ace_cta:"Unlock my full plan — 9.99€/mo", ace_sub:"Less than 1h with a human coach", strengths:"Strengths", weaknesses:"To Improve", recent:"Recent Matches", map:"Map", result:"Result", agent:"Agent", insights:"ACE Insights", chat_title:"Chat with ACE", chat_ph:"Ask ACE anything...", chat_send:"Send", chat_thinking:"ACE is analyzing...", chips:["Why am I hardstuck?","Analyze my last 5 matches","How do I carry this rank?","30-day rankup plan","I'm tilted, help","Best agent for me?"], price_title:"Choose your plan", price_sub:"Less than 1 hour with a human coach", monthly:"Monthly", annual:"Annual", save:"2 months free", popular:"MOST POPULAR", cta_free:"Get Started", cta_pro:"Start Pro Now", cta_team:"Create My Team", cancel:"Cancel anytime. No commitment. Secure payment via Stripe." },
 };
 
 // ═══════════════════════════════════════
@@ -488,24 +488,40 @@ const Chat = ({ lang, t, playerStats }) => {
     role: "assistant",
     content: playerStats
       ? (lang === "fr"
-          ? "Salut ! Je suis ACE, ton coach perso. J'ai analyse tes stats : " + s.rank + ", KD " + s.kd + ", HS% " + s.hs + "%, Win Rate " + s.wr + "%. Tes points faibles : " + (s.weaknesses?.[0] || "a analyser") + ". Par ou tu veux commencer ?"
-          : "Hey! I'm ACE, your personal coach. Analyzed your stats: " + s.rank + ", K/D " + s.kd + ", HS% " + s.hs + "%, Win Rate " + s.wr + "%. Main weakness: " + (s.weaknesses?.[0] || "to analyze") + ". Where do you want to start?")
+          ? "Yo, c'est ACE. J'ai tout analyse en 4 secondes - " + s.rank + ", K/D " + s.kd + ", HS% " + s.hs + "%, Win Rate " + s.wr + "%. Ton plus gros probleme: " + (s.weaknesses?.[0] || "a identifier") + ". On corrige quoi en premier ? Aim, game sense ou mental ?"
+          : "Yo, it's ACE. Analyzed everything in 4 seconds - " + s.rank + ", K/D " + s.kd + ", HS% " + s.hs + "%, Win Rate " + s.wr + "%. Your biggest issue: " + (s.weaknesses?.[0] || "to identify") + ". What do we fix first? Aim, game sense or mental?")
       : (lang === "fr"
-          ? "Salut ! Je suis ACE. Entre ton Riot ID sur la page d'accueil pour que j'analyse tes vraies stats !"
-          : "Hey! I'm ACE. Enter your Riot ID on the home page so I can analyze your real stats!")
+          ? "Salut, je suis ACE, ton coach Valorant IA. Entre ton Riot ID sur l'accueil pour que je scanne tes vraies stats et je te dis exactement ce qui bloque ta progression."
+          : "Hey, I'm ACE, your AI Valorant coach. Enter your Riot ID on the home page so I can scan your real stats and tell you exactly what's blocking your climb.")
   }];
   const [msgs, setMsgs] = useState(initMsg);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const endRef = useRef(null);
 
-  const sys = \`You are ACE, an elite Valorant coach at VCT head-coach level.
-Player: \${s.name}#\${s.tag} | Rank: \${s.rank} (\${s.rr} RR) | Peak: \${s.peakRank}
-K/D: \${s.kd} | Win Rate: \${s.wr}% | HS%: \${s.hs}% | ACS: \${s.acs} | Clutch: \${s.clutch}%
-Strengths: \${s.strengths?.join(", ")} | Weaknesses: \${s.weaknesses?.join(", ")}
-Recent: \${s.matches?.map(m => \`\${m.result} \${m.map} \${m.agent} \${m.kda}\`).join(", ")}
-Rules: speak like a real human VCT coach, use gaming slang (peek/jiggle/eco/feed/clutch/trade/lurk), reference actual stats, compare to VCT pro averages, end with concrete micro-objective, max 120 words, be direct and actionable.
-Respond in \${lang === "fr" ? "French" : "English"}.\`;
+  const sys = \`Tu es ACE, un coach Valorant d'elite niveau VCT. Tu parles comme un vrai coach pro.
+
+PROFIL JOUEUR:
+- Joueur: \${s.name}#\${s.tag}
+- Rank actuel: \${s.rank} (\${s.rr} RR) | Peak: \${s.peakRank}
+- Stats cles: K/D \${s.kd} | Win Rate \${s.wr}% | HS% \${s.hs}% | ACS \${s.acs} | Clutch \${s.clutch}%
+- Points forts: \${s.strengths?.join(", ")}
+- Points faibles: \${s.weaknesses?.join(", ")}
+- Derniers matchs: \${s.matches?.map(m => \`\${m.result} \${m.map} \${m.agent} \${m.kda}\`).join(", ")}
+
+TON STYLE:
+- Tu es DIRECT et BRUTAL mais bienveillant comme un vrai coach
+- Tu utilises le vocabulaire Valorant/esport: peek, jiggle, eco, feed, clutch, trade, lurk, rotate, flash, smoke, split, lurk, entry, IGL, retake
+- Tu compares TOUJOURS avec les stats VCT pro moyennes (ex: "Les pros VCT maintiennent 32% HS minimum")
+- Tu donnes des MICRO-OBJECTIFS concrets et mesurables (ex: "Objectif: 28% HS minimum sur tes 10 prochains matchs")
+- Tu expliques le POURQUOI derriere chaque conseil
+- Maximum 150 mots par reponse, sois PERCUTANT
+
+EXEMPLES DE TON:
+❌ Mauvais: "Il faudrait ameliorer ton aim"
+✅ Bon: "Ton HS% a 23% est en dessous des 28% moyenne Gold. C'est ton crosshair qui descend sous la tete. Micro-objectif: 5 min de routine aim avant ranked, vise UNIQUEMENT les tetes en DM pendant 15 min. Objectif mesurable: 26% HS minimum dans tes 5 prochains matchs."
+
+Reponds en \${lang === "fr" ? "francais" : "English"} avec ce ton de coach pro VCT.\`;
 
   const send = async () => {
     if (!input.trim() || loading) return;
