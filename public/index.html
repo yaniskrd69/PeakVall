@@ -254,22 +254,7 @@ const Landing = ({ lang, t, onNav, onStats }) => {
 // DASHBOARD
 // ═══════════════════════════════════════
 const Dashboard = ({ lang, t, playerStats, onNav }) => {
-  const [step, setStep] = useState(0);
-  const [focus, setFocus] = useState(null);
   const s = playerStats || MOCK;
-
-  const focuses = [
-    { k: "aim", icon: "🎯", fr: "Aim", en: "Aim", frs: "Mécaniques, précision", ens: "Mechanics & precision" },
-    { k: "sense", icon: "🧠", fr: "Game Sense", en: "Game Sense", frs: "Rotations, info", ens: "Rotations & info" },
-    { k: "team", icon: "🤝", fr: "Team Play", en: "Team Play", frs: "Util, communication", ens: "Utility & comms" },
-    { k: "all", icon: "⚡", fr: "Tout améliorer", en: "Everything", frs: "Analyse complète", ens: "Full analysis" },
-  ];
-
-  const styles2 = [
-    { k: "carry", icon: "🔥", fr: "Carry Mode", en: "Carry Mode", frs: "Je joue pour fragger", ens: "I play to frag" },
-    { k: "igl", icon: "🧩", fr: "IGL Calme", en: "Calm IGL", frs: "Je shot-call mon équipe", ens: "I shot-call my team" },
-    { k: "balance", icon: "⚖️", fr: "Équilibré", en: "Balanced", frs: "Frag + support", ens: "Frag + support" },
-  ];
 
   const statColor = (v, low, high) => v >= high ? "#4ade80" : v >= low ? "#ffd700" : "#f87171";
 
@@ -301,51 +286,6 @@ const Dashboard = ({ lang, t, playerStats, onNav }) => {
       </div>
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
-
-        {/* QUIZ ACE */}
-        {step < 3 && (
-          <div style={{ background: "#111118", border: "1px solid #ff465530", borderRadius: 16, padding: "28px 32px", marginBottom: 32 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-              <div style={{ width: 32, height: 32, borderRadius: "50%", background: "#ff465522", border: "2px solid #ff4655", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Rajdhani, sans-serif", fontWeight: 700, color: "#ff4655", fontSize: 11 }}>ACE</div>
-              <div style={{ fontFamily: "Rajdhani, sans-serif", fontSize: 17, fontWeight: 700 }}>
-                {step === 0 ? (lang === "fr" ? "Sur quoi tu veux progresser ?" : "What do you want to improve?") :
-                 step === 1 ? (lang === "fr" ? "Comment tu joues en ranked ?" : "How do you play ranked?") :
-                 (lang === "fr" ? "Analyse en cours..." : "Analyzing...")}
-              </div>
-            </div>
-            {step === 0 && (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr))", gap: 10 }}>
-                {focuses.map(o => (
-                  <button key={o.k} onClick={() => { setFocus(o.k); setStep(1); }}
-                    style={{ background: "#0a0a0f", border: "1px solid #1e1e2e", borderRadius: 12, padding: "16px 14px", cursor: "pointer", textAlign: "left", transition: "all .15s" }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff4655"; e.currentTarget.style.background = "#ff465508"; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e1e2e"; e.currentTarget.style.background = "#0a0a0f"; }}>
-                    <div style={{ fontSize: 24, marginBottom: 8 }}>{o.icon}</div>
-                    <div style={{ fontFamily: "Rajdhani, sans-serif", fontWeight: 700, fontSize: 15, marginBottom: 3 }}>{lang === "fr" ? o.fr : o.en}</div>
-                    <div style={{ color: "#6b6b7a", fontSize: 12 }}>{lang === "fr" ? o.frs : o.ens}</div>
-                  </button>
-                ))}
-              </div>
-            )}
-            {step === 1 && (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px,1fr))", gap: 10 }}>
-                {styles2.map(o => (
-                  <button key={o.k} onClick={() => setStep(3)}
-                    style={{ background: "#0a0a0f", border: "1px solid #1e1e2e", borderRadius: 12, padding: "16px 14px", cursor: "pointer", textAlign: "left", transition: "all .15s" }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = "#ff4655"; e.currentTarget.style.background = "#ff465508"; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = "#1e1e2e"; e.currentTarget.style.background = "#0a0a0f"; }}>
-                    <div style={{ fontSize: 24, marginBottom: 8 }}>{o.icon}</div>
-                    <div style={{ fontFamily: "Rajdhani, sans-serif", fontWeight: 700, fontSize: 15, marginBottom: 3 }}>{lang === "fr" ? o.fr : o.en}</div>
-                    <div style={{ color: "#6b6b7a", fontSize: 12 }}>{lang === "fr" ? o.frs : o.ens}</div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {step >= 3 && (
-          <>
             {/* STATS GRID */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 28 }}>
               {stats.map(st => (
@@ -427,8 +367,6 @@ const Dashboard = ({ lang, t, playerStats, onNav }) => {
                 {lang === "fr" ? "Parler à ACE →" : "Talk to ACE →"}
               </button>
             </div>
-          </>
-        )}
       </div>
     </div>
   );
