@@ -267,31 +267,9 @@ const Landing = ({ lang, t, onNav, onStats }) => {
 // DASHBOARD
 // ═══════════════════════════════════════
 const Dashboard = ({ lang, t, playerStats }) => {
-  const [step, setStep] = useState(3);
-  const [welcomeMsg, setWelcomeMsg] = useState("");
-  const [focus, setFocus] = useState(null);
   const [proOn, setProOn] = useState(false);
   const s = playerStats || MOCK;
 
-  const focuses = [
-    { k: "aim", icon: "🎯", fr: "Aim", en: "Aim", frs: "Mécaniques, flick shots, visée", ens: "Mechanics, flick shots, crosshair" },
-    { k: "gs", icon: "🧠", fr: "Game Sense", en: "Game Sense", frs: "Décisions, timings, rotations", ens: "Decisions, timings, rotations" },
-    { k: "tp", icon: "🤝", fr: "Team Play", en: "Team Play", frs: "Calls, synergie, communication", ens: "Calls, synergy, communication" },
-    { k: "all", icon: "📊", fr: "Tout", en: "Everything", frs: "Analyse globale complète", ens: "Full global analysis" },
-  ];
-  const styles = [
-    { k: "carry", icon: "⚔️", fr: "Mode Carry", en: "Carry Mode", frs: "J'arrache tout, je carry", ens: "I outfrag everyone, I carry" },
-    { k: "igl", icon: "🧘", fr: "IGL Calme", en: "Calm IGL", frs: "Je donne des calls, je joue pour gagner", ens: "I give calls, play to win" },
-    { k: "bal", icon: "⚖️", fr: "Équilibre", en: "Balance", frs: "Bon méca ET bon leader", ens: "Mechanically strong AND team leader" },
-  ];
-
-  const aceMsg = focus === "aim"
-    ? (lang === "fr" ? \`Tu as le potentiel pour carry — mais ton HS% à \${s.hs}% au lieu de 35%+ te bloque. C'est ton crosshair placement.\` : \`You have carry potential — but HS% at \${s.hs}% instead of 35%+ is holding you back. Crosshair placement.\`)
-    : focus === "gs"
-    ? (lang === "fr" ? "Tes mécaniques ne sont pas le problème. Tes décisions te coûtent des rounds — tu rotates trop tard." : "Your mechanics aren't the issue. Decision-making is costing you rounds — you rotate too late.")
-    : focus === "tp"
-    ? (lang === "fr" ? "Ton équipe gagne plus quand tu joues sentinel. Tu es plus précieux que tu ne le crois." : "Your team wins more when you play sentinel. You're more valuable than you think.")
-    : (lang === "fr" ? \`J'ai trouvé le problème principal : ton trade ratio. Les pros VCT maintiennent 0.7+. Toi tu es bien en dessous.\` : \`Found the main issue: your trade ratio. VCT pros keep 0.7+. You're well below that.\`);
 
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0f", color: "#fff", fontFamily: "Inter, sans-serif", padding: "26px 22px" }}>
@@ -307,56 +285,6 @@ const Dashboard = ({ lang, t, playerStats }) => {
         {s.isDemo && <div style={{ background: "#ff465511", border: "1px solid #ff465533", borderRadius: 8, padding: "5px 12px", color: "#ff8891", fontSize: 12 }}>⚡ {lang === "fr" ? "Stats générées — déploie le backend pour données réelles" : "Generated stats — deploy backend for real data"}</div>}
       </div>
 
-      {/* QUIZ */}
-      {step < 3 && (
-        <div style={{ background: "#111118", border: "1px solid #ff465533", borderRadius: 16, padding: 26, marginBottom: 22, position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "linear-gradient(90deg,#ff4655,#ff8891)" }} />
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
-            <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#ff465522", border: "2px solid #ff4655", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "Rajdhani, sans-serif", fontWeight: 700, color: "#ff4655", fontSize: 12 }}>ACE</div>
-            <div style={{ fontFamily: "Rajdhani, sans-serif", fontSize: 16, fontWeight: 700 }}>
-              {step === 0 ? t.quiz_q1 : step === 1 ? t.quiz_q2 : (lang === "fr" ? "ACE analyse ton profil..." : "ACE analyzing your profile...")}
-            </div>
-          </div>
-          {step === 0 && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(155px,1fr))", gap: 10 }}>
-              {focuses.map(o => (
-                <button key={o.k} onClick={() => { setFocus(o.k); setStep(1); }}
-                  style={{ background: "#0a0a0f", border: "1px solid #1e1e2e", borderRadius: 12, padding: "16px 12px", cursor: "pointer", textAlign: "left", transition: "border-color .15s" }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = "#ff4655"}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = "#1e1e2e"}>
-                  <div style={{ fontSize: 22, marginBottom: 7 }}>{o.icon}</div>
-                  <div style={{ fontFamily: "Rajdhani, sans-serif", fontWeight: 700, color: "#fff", fontSize: 14, marginBottom: 3 }}>{lang === "fr" ? o.fr : o.en}</div>
-                  <div style={{ color: "#8b8b9a", fontSize: 11 }}>{lang === "fr" ? o.frs : o.ens}</div>
-                </button>
-              ))}
-            </div>
-          )}
-          {step === 1 && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(155px,1fr))", gap: 10 }}>
-              {styles.map(o => (
-                <button key={o.k} onClick={() => setStep(2)}
-                  style={{ background: "#0a0a0f", border: "1px solid #1e1e2e", borderRadius: 12, padding: "16px 12px", cursor: "pointer", textAlign: "left", transition: "border-color .15s" }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = "#ff4655"}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = "#1e1e2e"}>
-                  <div style={{ fontSize: 22, marginBottom: 7 }}>{o.icon}</div>
-                  <div style={{ fontFamily: "Rajdhani, sans-serif", fontWeight: 700, color: "#fff", fontSize: 14, marginBottom: 3 }}>{lang === "fr" ? o.fr : o.en}</div>
-                  <div style={{ color: "#8b8b9a", fontSize: 11 }}>{lang === "fr" ? o.frs : o.ens}</div>
-                </button>
-              ))}
-            </div>
-          )}
-          {step === 2 && (
-            <div style={{ textAlign: "center", padding: "14px 0" }}>
-              <div style={{ fontSize: 42, marginBottom: 12 }}>🔍</div>
-              <div style={{ fontFamily: "Rajdhani, sans-serif", fontSize: 18, color: "#fff", marginBottom: 18 }}>{lang === "fr" ? "ACE analyse ton profil complet..." : "ACE analyzing your full profile..."}</div>
-              <button onClick={() => setStep(3)} style={{ padding: "12px 28px", background: "#ff4655", border: "none", borderRadius: 8, color: "#fff", fontWeight: 700, fontSize: 14, cursor: "pointer", fontFamily: "Rajdhani, sans-serif" }}>{t.quiz_btn}</button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {step >= 3 && (
-        <>
           {/* BEST STATS */}
           <div style={{ background: "linear-gradient(135deg,#111118,#1a0a0d)", border: "1px solid #ff465533", borderRadius: 14, padding: 20, marginBottom: 18 }}>
             <div style={{ fontFamily: "Rajdhani, sans-serif", fontSize: 17, fontWeight: 700, color: "#ff4655", marginBottom: 12 }}>🔥 {t.best}</div>
@@ -474,8 +402,6 @@ const Dashboard = ({ lang, t, playerStats }) => {
               </table>
             </div>
           </Card>
-        </>
-      )}
     </div>
   );
 };
