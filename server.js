@@ -488,11 +488,19 @@ const Chat = ({ lang, t, playerStats }) => {
     role: "assistant",
     content: playerStats
       ? (lang === "fr"
+<<<<<<< HEAD
       ? (lang === "fr"
           ? "Salut ! Je suis ACE, ton coach. Stats : " + s.rank + ", KD " + s.kd + ", HS% " + s.hs + "%, WR " + s.wr + "%. Faiblesse : " + (s.weaknesses?.[0] || "a analyser") + ". Par ou commencer ?"
           : "Hey! I am ACE, your coach. Stats: " + s.rank + ", K/D " + s.kd + ", HS% " + s.hs + "%, WR " + s.wr + "%. Weakness: " + (s.weaknesses?.[0] || "to analyze") + ". Where to start?")
       : (lang === "fr"
           ? "Salut ! Je suis ACE. Entre ton Riot ID pour analyser tes vraies stats !"
+=======
+          ? `Salut ! Je suis ACE, ton coach perso. J'ai analysé tes stats : ${s.rank}, KD ${s.kd}, HS% ${s.hs}%, Win Rate ${s.wr}%. Tes points faibles : ${s.weaknesses?.[0] || "à analyser"}. Par où tu veux commencer ?`
+          : `Hey! I'm ACE, your personal coach. Analyzed your stats: ${s.rank}, K/D ${s.kd}, HS% ${s.hs}%, Win Rate ${s.wr}%. Main weakness: ${s.weaknesses?.[0] || "to analyze"}. Where do you want to start?`)
+      : (lang === "fr"
+          ? "Salut ! Je suis ACE. Entre ton Riot ID sur la page d'accueil pour que j'analyse tes vraies stats !"
+          : "Hey! I'm ACE. Enter your Riot ID on the home page so I can analyze your real stats!")
+>>>>>>> 855bcc80bfce47c27b3f1437f023ad3eda13ec84
   }];
   const [msgs, setMsgs] = useState(initMsg);
   const [input, setInput] = useState("");
