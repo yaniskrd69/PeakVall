@@ -27,16 +27,24 @@ const fetchPlayer = async (riotId) => {
   const [name, tag] = parts;
   try {
     const res = await fetch(`${BACKEND_URL}/api/player/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`);
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("API HTTP error:", res.status, errorText);
+      return { success: false, error: `Erreur serveur (${res.status})` };
+    }
+
     const data = await res.json();
-    if (!res.ok || !data.success) {
+    console.log("API response:", data);
+
+    if (!data.success) {
       console.error("API error:", data.error);
       return { success: false, error: data.error || "Joueur introuvable" };
     }
     return data;
   } catch (e) {
-    // Fallback to mock if backend unreachable
     console.error("API request failed:", e.message, e);
-    return { success: false, error: `Erreur API: ${e.message}` };
+    return { success: false, error: `Erreur de connexion: ${e.message}` };
   }
 };
 
