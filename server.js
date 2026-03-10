@@ -267,7 +267,8 @@ const Landing = ({ lang, t, onNav, onStats }) => {
 // DASHBOARD
 // ═══════════════════════════════════════
 const Dashboard = ({ lang, t, playerStats }) => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(3);
+  const [welcomeMsg, setWelcomeMsg] = useState("");
   const [focus, setFocus] = useState(null);
   const [proOn, setProOn] = useState(false);
   const s = playerStats || MOCK;
@@ -484,16 +485,43 @@ const Dashboard = ({ lang, t, playerStats }) => {
 // ═══════════════════════════════════════
 const Chat = ({ lang, t, playerStats }) => {
   const s = playerStats || MOCK;
-  const initMsg = () => [{
-    role: "assistant",
-    content: playerStats
-      ? (lang === "fr"
-          ? "Salut ! Je suis ACE, ton coach Valorant. J'ai analyse tes stats en detail - " + s.rank + ", K/D " + s.kd + ", HS% " + s.hs + "%, Win Rate " + s.wr + "%. Ton principal axe d'amelioration : " + (s.weaknesses?.[0] || "a identifier") + ". Sur quoi tu veux qu'on travaille en priorite ? Aim, game sense ou mental ?"
-          : "Hey! I'm ACE, your Valorant coach. I analyzed your stats in detail - " + s.rank + ", K/D " + s.kd + ", HS% " + s.hs + "%, Win Rate " + s.wr + "%. Your main area for improvement: " + (s.weaknesses?.[0] || "to identify") + ". What do you want us to work on first? Aim, game sense or mental?")
-      : (lang === "fr"
+  const initMsg = () => {
+    if (!playerStats) {
+      return [{
+        role: "assistant",
+        content: lang === "fr"
           ? "Salut ! Je suis ACE, ton coach Valorant IA. Entre ton Riot ID sur l'accueil pour que j'analyse tes vraies stats et je te montre exactement comment progresser."
-          : "Hey! I'm ACE, your AI Valorant coach. Enter your Riot ID on the home page so I can analyze your real stats and show you exactly how to improve.")
-  }];
+          : "Hey! I'm ACE, your AI Valorant coach. Enter your Riot ID on the home page so I can analyze your real stats and show you exactly how to improve."
+      }];
+    }
+
+    const strengths = s.strengths?.slice(0, 2).join(", ") || (lang === "fr" ? "bon engagement" : "good engagement");
+    const weakKey = s.weaknesses?.[0] || (lang === "fr" ? "points à améliorer" : "areas to improve");
+
+    return [{
+      role: "assistant",
+      content: lang === "fr"
+        ? \`Salut \${s.name} ! J'ai analysé tes stats : tu es \${s.rank} avec un K/D de \${s.kd} et \${s.wr}% de winrate.
+
+Points forts : \${strengths}. C'est solide.
+
+Point faible principal : \${weakKey}. C'est exactement ce qui te bloque pour monter.
+
+La bonne nouvelle ? Ton profil montre un potentiel énorme d'évolution rapide. Tu as les bases, il manque juste quelques ajustements clés. Je vais te donner un plan concret pour débloquer ton vrai niveau.
+
+Sur quoi tu veux qu'on travaille en priorité ?\`
+        : \`Hey \${s.name}! I analyzed your stats: you're \${s.rank} with \${s.kd} K/D and \${s.wr}% winrate.
+
+Strengths: \${strengths}. Solid foundation.
+
+Main weakness: \${weakKey}. This is exactly what's holding you back.
+
+Good news? Your profile shows huge potential for rapid improvement. You have the fundamentals, just need a few key adjustments. I'll give you a concrete plan to unlock your true level.
+
+What do you want to work on first?\`
+    }];
+  };
+
   const [msgs, setMsgs] = useState(initMsg);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
