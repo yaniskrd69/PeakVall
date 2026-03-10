@@ -270,6 +270,9 @@ const Dashboard = ({ lang, t, playerStats }) => {
   const [proOn, setProOn] = useState(false);
   const s = playerStats || MOCK;
 
+  const aceMsg = lang === "fr"
+    ? `${s.name}, j'ai détecté que tu perds 47% de tes gunfights à cause d'un problème de timing sur ton contre-strafe. Un coach humain mettrait 3 sessions à identifier ça. Moi, 4 secondes.`
+    : `${s.name}, I detected you're losing 47% of your gunfights due to counter-strafe timing. A human coach would take 3 sessions to spot this. I took 4 seconds.`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0f", color: "#fff", fontFamily: "Inter, sans-serif", padding: "26px 22px" }}>
