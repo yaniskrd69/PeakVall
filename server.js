@@ -502,10 +502,10 @@ Respond in \${lang === "fr" ? "French" : "English"}.\`;
     const um = { role: "user", content: input };
     setMsgs(p => [...p, um]); setInput(""); setLoading(true);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, system: sys, messages: [...msgs, um].map(m => ({ role: m.role, content: m.content })) })
+        body: JSON.stringify({ system: sys, messages: [...msgs, um].map(m => ({ role: m.role, content: m.content })) })
       });
       const d = await res.json();
       setMsgs(p => [...p, { role: "assistant", content: d.content?.[0]?.text || (lang === "fr" ? "Erreur de connexion." : "Connection error.") }]);
@@ -733,6 +733,28 @@ app.get("/api/player/:name/:tag", async (req, res) => {
     if (err.response?.status === 404) return res.status(404).json({ success: false, error: "Joueur introuvable — vérifie le Riot ID" });
     if (err.response?.status === 429) return res.status(429).json({ success: false, error: "Rate limit — réessaie dans quelques secondes" });
     return res.status(500).json({ success: false, error: "Erreur serveur" });
+  }
+});
+
+
+// ── Anthropic Chat Proxy ───────────────────────────────────
+app.post("/api/chat", async (req, res) => {
+  const { messages, system } = req.body;
+  try {
+    const response = await axios.post(
+      "https://api.anthropic.com/v1/messages",
+      { model: "claude-sonnet-4-20250514", max_tokens: 1000, system, messages },
+      { headers: {
+          "Content-Type": "application/json",
+          "x-api-key": process.env.ANTHROPIC_API_KEY,
+          "anthropic-version": "2023-06-01"
+        }, timeout: 30000
+      }
+    );
+    res.json(response.data);
+  } catch (err) {
+    console.error("Anthropic error:", err.response?.status, err.message);
+    res.status(500).json({ error: "Erreur IA" });
   }
 });
 
