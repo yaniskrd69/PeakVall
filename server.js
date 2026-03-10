@@ -78,9 +78,9 @@ const generateMockStats = async (name, tag) => {
   if (hs >= 26) strengths.push(\`HS% \${hs}% — au-dessus de la moyenne\`); else weaknesses.push(\`HS% \${hs}% — crosshair placement issue\`);
   if (!strengths.length) strengths.push("Joueur actif et impliqué");
   const insights = [
-    { en: \`HS% at \${hs}%\${hs<25?" — below average. Fix crosshair placement first.":" — above average. Focus on first-duel consistency."}\`, fr: \`HS% à \${hs}%\${hs<25?" — en dessous de la moyenne. Corrige le placement de visée en priorité.":" — au-dessus de la moyenne. Concentre-toi sur la constance en duel."}\` },
-    { en: \`K/D at \${kd}\${kd<1.2?" — dying too much. Stop peeking alone.":" is solid. Convert individual performance into team wins."}\`, fr: \`KD à \${kd}\${kd<1.2?" — tu meurs trop. Arrête de peek seul.":" est solide. Convertis ta perf individuelle en victoires."}\` },
-    { en: \`Win rate \${wr}%\${wr<50?" — communication > fragging.":" is positive. Focus on consistency."}\`, fr: \`Win rate \${wr}%\${wr<50?" — communication > frags.":" est positif. Concentre-toi sur la constance."}\` },
+    { en: \`HS% at \${hs}%\${hs<25?" vs 28% avg — your crosshair descends + bad contre-strafe. 10min DM headshot-only daily.":" vs 28% avg — solid mechs. Now work first blood % and entry timing."}\`, fr: \`HS% à \${hs}%\${hs<25?" vs 28% moy — ton crosshair descend + mauvais contre-strafe. 10min DM headshot-only par jour.":" vs 28% moy — bonnes mechs. Maintenant bosse ton first blood % et timing d'entry."}\` },
+    { en: \`K/D at \${kd}\${kd<1.2?" — you feed. Stop solo peeking, always double swing with a mate to trade.":" — solid fragging. Focus on KAST 70%+ (survive or trade when you die)."}\`, fr: \`K/D à \${kd}\${kd<1.2?" — tu feed. Arrete les peeks solo, toujours double swing avec un mate pour trade.":" — bon fragging. Focus sur KAST 70%+ (survie ou trade quand tu meurs)."}\` },
+    { en: \`Win rate \${wr}%\${wr<50?" — mechanics won't save bad teamplay. IGL more, call rotates, don't lurk every round.":" — positive W/L. Push for consistency: same agents, same positions, master 2-3 lineups."}\`, fr: \`Win rate \${wr}%\${wr<50?" — les mechs sauveront pas un mauvais teamplay. IGL plus, call les rotates, lurk pas chaque round.":" — W/L positif. Vise la constance : memes agents, memes positions, maitrise 2-3 lineups."}\` },
   ];
   return { success: true, name, tag, rank, rr, peakRank, score: Math.min(100, Math.round(kd*22+wr*.45+hs*.3)), kd, wr, hs, acs, fbr, clutch, strengths, weaknesses, matches, insights, isDemo: true }
 };
@@ -101,9 +101,9 @@ const MOCK = {
     { map: "Icebox", agent: "Jett", result: "W", kda: "16/11/5", acs: 212, score: 69 },
   ],
   insights: [
-    { en: "Trade ratio 0.42 — VCT pros keep above 0.7. Stop peeking alone.", fr: "Trade ratio 0.42 — les pros VCT maintiennent 0.7+. Arrête de peek seul." },
-    { en: "HS% 23% below Gold average (28%). Crosshair dipping below head level.", fr: "HS% 23% en dessous de la moyenne Gold (28%). Ta visée descend sous la hauteur de tête." },
-    { en: "31% better on attack than defense. Play more aggressive entry roles.", fr: "31% meilleur en attaque qu'en défense. Joue des rôles d'entry plus agressifs." },
+    { en: "Trade ratio 0.42 — VCT pros maintain 0.7+. You entry solo = you feed. Always double swing with a teammate 2sec behind to trade.", fr: "Trade ratio 0.42 — les pros VCT font 0.7+. Tu entry solo = tu feed. Toujours double swing avec un mate a 2sec derriere pour trade." },
+    { en: "HS% 23% vs 28% Gold average. Your crosshair descends under head level + bad contre-strafe. 10min DM headshot-only daily.", fr: "HS% 23% vs 28% moyenne Gold. Ton crosshair descend sous la tete + mauvais contre-strafe. 10min DM headshot-only par jour." },
+    { en: "31% better attacking than defending. You're a natural entry fragger. Play Jett/Neon/Raze and aggro hard, let teammates anchor sites.", fr: "31% meilleur en attaque qu'en defense. T'es un entry fragger naturel. Joue Jett/Neon/Raze et aggro fort, laisse tes mates anchor les sites." },
   ],
 };
 
@@ -499,7 +499,7 @@ const Chat = ({ lang, t, playerStats }) => {
   const [loading, setLoading] = useState(false);
   const endRef = useRef(null);
 
-  const sys = \`Tu es ACE, un coach Valorant d'elite niveau VCT. Tu parles comme un vrai coach pro.
+  const sys = \`Tu es ACE, un coach Valorant d'elite niveau VCT. Tu parles comme un vrai coach pro qui connait TOUT le vocabulaire competitif.
 
 PROFIL JOUEUR:
 - Joueur: \${s.name}#\${s.tag}
@@ -511,17 +511,30 @@ PROFIL JOUEUR:
 
 TON STYLE:
 - Tu es DIRECT et BRUTAL mais bienveillant comme un vrai coach
-- Tu utilises le vocabulaire Valorant/esport: peek, jiggle, eco, feed, clutch, trade, lurk, rotate, flash, smoke, split, lurk, entry, IGL, retake
-- Tu compares TOUJOURS avec les stats VCT pro moyennes (ex: "Les pros VCT maintiennent 32% HS minimum")
-- Tu donnes des MICRO-OBJECTIFS concrets et mesurables (ex: "Objectif: 28% HS minimum sur tes 10 prochains matchs")
-- Tu expliques le POURQUOI derriere chaque conseil
+- Tu utilises NATURELLEMENT le vocabulaire Valorant pro
+- Tu compares TOUJOURS avec les benchmarks VCT (ex: "Les pros maintiennent 28%+ HS, 1.3+ K/D, 70%+ KAST")
+- Tu donnes des MICRO-OBJECTIFS concrets et mesurables
+- Tu expliques le POURQUOI technique derriere chaque conseil
 - Maximum 150 mots par reponse, sois PERCUTANT
 
-EXEMPLES DE TON:
-❌ Mauvais: "Il faudrait ameliorer ton aim"
-✅ Bon: "Ton HS% a 23% est en dessous des 28% moyenne Gold. C'est ton crosshair qui descend sous la tete. Micro-objectif: 5 min de routine aim avant ranked, vise UNIQUEMENT les tetes en DM pendant 15 min. Objectif mesurable: 26% HS minimum dans tes 5 prochains matchs."
+VOCABULAIRE A UTILISER (parle comme un vrai joueur):
+MECANIQUES: contre-strafe, dink, peek, jiggle peek, aggro, cubby, strafing, pop flash, wallbang
+STRATEGIE: trade, double swing, stack, rotate, retake, lurk, fake, rush, anchor, flank, entry fragger
+ECONOMIE: full buy, force buy, eco/save, bonus round
+OBJECTIFS: plant, defuse, ninja defuse, fake defuse, post-plant
+ROLES: entry, IGL, support, sentinel, controller, initiator
+UTIL: smoke/fum, flash, molly, lineups
+ARMES: OP, Vandal, Phantom, Sheriff, Odin
+STATS: K/D, HS%, ACS, KAST, first blood, clutch, ace
+MENTAL: feed/feeder, tilt, info
 
-Reponds en \${lang === "fr" ? "francais" : "English"} avec ce ton de coach pro VCT.\`;
+EXEMPLES DE TON:
+❌ Mauvais: "Ameliore ton aim"
+✅ Bon: "Ton HS% a 23% vs 28% moyenne Gold = tu feed. C'est ton contre-strafe + crosshair qui descend sous la tete. Micro-objectif: 10 min DM pur headshot + travaille les jiggle peeks sur les cubbys. Objectif mesurable: 26% HS + 1.1 K/D minimum sur 5 matchs."
+
+✅ Bon: "Tu rush trop sans trade. Les pros VCT maintiennent 70%+ KAST parce qu'ils double swing TOUJOURS. Toi tu entry solo = tu feed. Nouvelle regle: jamais peek sans un teammate a 2 secondes derriere toi pour trade."
+
+Reponds en \${lang === "fr" ? "francais" : "English"} avec ce ton de coach pro VCT. Utilise le vocabulaire naturellement, pas de facon forcee.\`;
 
   const send = async () => {
     if (!input.trim() || loading) return;
@@ -749,9 +762,9 @@ app.get("/api/player/:name/:tag", async (req, res) => {
     if (hsPct >= 26) strengths.push(`HS% ${hsPct}% — au-dessus de la moyenne`); else weaknesses.push(`HS% ${hsPct}% — crosshair placement issue`);
     if (!strengths.length) strengths.push("Joueur actif et impliqué");
     const insights = [
-      { en: `HS% at ${hsPct}%${hsPct<25?" — below avg. Fix crosshair placement.":" — above avg. Focus on first-duel consistency."}`, fr: `HS% à ${hsPct}%${hsPct<25?" — en dessous de la moyenne. Corrige le crosshair placement.":" — au-dessus de la moyenne. Concentre-toi sur la constance en duel."}` },
-      { en: `K/D at ${kd}${kd<1.2?" — dying too much. Stop peeking alone.":" is solid. Convert perf into team wins."}`, fr: `KD à ${kd}${kd<1.2?" — tu meurs trop. Arrête de peek seul.":" est solide. Convertis ta perf en victoires."}` },
-      { en: `Win rate ${wr}%${wr<50?" — communication > fragging.":" is positive. Focus on consistency."}`, fr: `Win rate ${wr}%${wr<50?" — communication > frags.":" est positif. Concentre-toi sur la constance."}` },
+      { en: `HS% at ${hsPct}%${hsPct<25?" vs 28% avg — crosshair descends + bad contre-strafe. 10min DM headshot-only daily.":" vs 28% avg — solid mechs. Work first blood rate and entry timing now."}`, fr: `HS% à ${hsPct}%${hsPct<25?" vs 28% moy — crosshair descend + mauvais contre-strafe. 10min DM headshot-only par jour.":" vs 28% moy — bonnes mechs. Bosse ton first blood rate et timing d'entry maintenant."}` },
+      { en: `K/D at ${kd}${kd<1.2?" — you feed. Stop solo peeking, always double swing with a mate to trade.":" — solid fragging. Focus KAST 70%+ (survive or get traded when dying)."}`, fr: `K/D à ${kd}${kd<1.2?" — tu feed. Arrete les peeks solo, toujours double swing avec un mate pour trade.":" — bon fragging. Focus KAST 70%+ (survie ou get trade quand tu meurs)."}` },
+      { en: `Win rate ${wr}%${wr<50?" — mechanics won't save bad teamplay. IGL more, call rotates, don't lurk every round.":" — positive W/L. Push consistency: same agents, same spots, master 2-3 lineups."}`, fr: `Win rate ${wr}%${wr<50?" — les mechs sauveront pas un mauvais teamplay. IGL plus, call les rotates, lurk pas chaque round.":" — W/L positif. Vise constance : memes agents, memes spots, maitrise 2-3 lineups."}` },
     ];
     return res.json({ success: true, name: acc.name, tag: acc.tag, region, rank, rr, peakRank, score: Math.min(100, Math.round(kd*22+wr*.45+hsPct*.3)), kd, wr, hs: hsPct, acs, fbr: 16, clutch: 32, strengths, weaknesses, matches: recent.slice(0, 5), insights });
   } catch (err) {
