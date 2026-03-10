@@ -685,7 +685,7 @@ app.get("/api/player/:name/:tag", async (req, res) => {
   try {
     const accRes = await axios.get(
       `https://api.henrikdev.xyz/valorant/v1/account/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`,
-      { headers: { Authorization: HENRIK_KEY }, timeout: 8000 }
+      { headers: { "Authorization": HENRIK_KEY }, timeout: 8000 }
     );
     if (accRes.data.status !== 200) {
       return res.status(404).json({ success: false, error: "Joueur introuvable" });
@@ -694,8 +694,8 @@ app.get("/api/player/:name/:tag", async (req, res) => {
     const region = (acc.region || "eu").toLowerCase();
 
     const [mmrRes, matchRes] = await Promise.all([
-      axios.get(`https://api.henrikdev.xyz/valorant/v2/mmr/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`, { headers: { Authorization: HENRIK_KEY }, timeout: 8000 }),
-      axios.get(`https://api.henrikdev.xyz/valorant/v3/matches/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}?size=10`, { headers: { Authorization: HENRIK_KEY }, timeout: 10000 }),
+      axios.get(`https://api.henrikdev.xyz/valorant/v2/mmr/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}`, { headers: { "Authorization": HENRIK_KEY }, timeout: 8000 }),
+      axios.get(`https://api.henrikdev.xyz/valorant/v3/matches/${region}/${encodeURIComponent(name)}/${encodeURIComponent(tag)}?size=10`, { headers: { "Authorization": HENRIK_KEY }, timeout: 10000 }),
     ]);
 
     const mmrD = mmrRes.data?.data?.current_data;
