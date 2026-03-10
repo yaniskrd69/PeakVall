@@ -740,10 +740,22 @@ app.get("/api/player/:name/:tag", async (req, res) => {
 // ── Anthropic Chat Proxy ───────────────────────────────────
 app.post("/api/chat", async (req, res) => {
   const { messages, system } = req.body;
+  // Filter to only user/assistant roles, ensure content is string
+  const cleanMessages = (messages || [])
+    .filter(m => m.role === "user" || m.role === "assistant")
+    .map(m => ({ role: m.role, content: String(m.content || "") }));
+  if (!cleanMessages.length || cleanMessages[cleanMessages.length-1].role !== "user") {
+    return res.status(400).json({ error: "Invalid messages" });
+  }
   try {
     const response = await axios.post(
       "https://api.anthropic.com/v1/messages",
-      { model: "claude-sonnet-4-20250514", max_tokens: 1000, system, messages },
+      {
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: system || "You are ACE, a Valorant coach.",
+        messages: cleanMessages
+      },
       { headers: {
           "Content-Type": "application/json",
           "x-api-key": process.env.ANTHROPIC_API_KEY,
@@ -753,8 +765,8 @@ app.post("/api/chat", async (req, res) => {
     );
     res.json(response.data);
   } catch (err) {
-    console.error("Anthropic error:", err.response?.status, err.message);
-    res.status(500).json({ error: "Erreur IA" });
+    console.error("Anthropic error:", err.response?.status, err.response?.data || err.message);
+    res.status(500).json({ error: "Erreur IA", detail: err.response?.data });
   }
 });
 
