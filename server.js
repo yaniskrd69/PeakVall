@@ -93,16 +93,8 @@ function calculateStats(account, mmr, matches) {
       totalKills += playerData.stats?.kills || 0;
       totalDeaths += playerData.stats?.deaths || 0;
       totalHS += playerData.stats?.headshots || 0;
-      totalShots += playerData.stats?.bodyshots + playerData.stats?.headshots + playerData.stats?.legshots || 1;
+      totalShots += (playerData.stats?.bodyshots || 0) + (playerData.stats?.headshots || 0) + (playerData.stats?.legshots || 0);
       totalACS += playerData.stats?.score || 0;
-
-      const damageEvents = playerData.damage_made || [];
-      const hasFirstBlood = damageEvents.some(d => d.kill_type === 'first_blood');
-      if (hasFirstBlood) firstBloods++;
-
-      const econData = playerData.economy || {};
-      if (econData.loadout_value) clutchAttempts++;
-      if (playerData.behaviour?.afk_rounds === 0) clutchesWon += Math.floor(Math.random() * 2);
 
       if (playerData.team === match.teams?.red?.has_won ? "Red" : playerData.team === match.teams?.blue?.has_won ? "Blue" : null) {
         wins++;
@@ -126,8 +118,8 @@ function calculateStats(account, mmr, matches) {
   stats.wr = matchCount > 0 ? Math.round((wins / matchCount) * 100) : 0;
   stats.hs = totalShots > 0 ? Math.round((totalHS / totalShots) * 100) : 0;
   stats.acs = matchCount > 0 ? Math.round(totalACS / matchCount) : 0;
-  stats.fbr = matchCount > 0 ? Math.round((firstBloods / matchCount) * 100) : 0;
-  stats.clutch = clutchAttempts > 0 ? Math.round((clutchesWon / clutchAttempts) * 100) : 0;
+  stats.fbr = 0;
+  stats.clutch = 0;
   stats.matches = recentMatches;
 
   if (stats.kd >= 1.3) stats.strengths.push(`K/D ${stats.kd} — above average`);
